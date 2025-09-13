@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EquationViz - Mathematical Equation Visualizer</title>
+    <link rel="stylesheet" href="src/styles.css">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">🧮 EquationViz</h1>
+                <p class="app-subtitle">Visualize any mathematical equation from simple to complex</p>
+                <div class="header-actions">
+                    <a href="https://github.com/yourusername/equationviz" class="btn-secondary" target="_blank">
+                        <svg class="icon" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a href="#demo" class="btn-primary">Try Demo</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content" id="demo">
+            <!-- Tab Navigation -->
+            <nav class="tab-nav">
+                <button class="tab-btn active" data-tab="basic">📈 Basic Plotting</button>
+                <button class="tab-btn" data-tab="advanced">🔬 Advanced Analysis</button>
+                <button class="tab-btn" data-tab="3d">🌐 3D Visualization</button>
+                <button class="tab-btn" data-tab="interactive">📊 Interactive</button>
+            </nav>
+
+            <!-- Tab Panels -->
+            <div class="tab-panels">
+                <!-- Basic Plotting Panel -->
+                <div class="tab-panel active" id="basic-panel">
+                    <div class="panel-content">
+                        <div class="controls-section">
+                            <h2>📈 Basic Function Plotting</h2>
+                            
+                            <div class="examples-grid">
+                                <button class="example-btn" data-equation="x^2">x²</button>
+                                <button class="example-btn" data-equation="sin(x)">sin(x)</button>
+                                <button class="example-btn" data-equation="cos(x) + sin(2*x)">cos(x) + sin(2x)</button>
+                                <button class="example-btn" data-equation="x^3 - 3*x^2 + 2*x">x³ - 3x² + 2x</button>
+                                <button class="example-btn" data-equation="exp(-x^2)">e^(-x²)</button>
+                                <button class="example-btn" data-equation="log(x)">log(x)</button>
+                                <button class="example-btn" data-equation="abs(x)">|x|</button>
+                                <button class="example-btn" data-equation="sqrt(x)">√x</button>
+                            </div>
+
+                            <div class="input-section">
+                                <div class="form-group">
+                                    <label for="equation-input-basic">Enter equation (y = f(x)):</label>
+                                    <input type="text" id="equation-input-basic" class="equation-input" 
+                                           placeholder="e.g., x^2 + 2*x + 1" value="x^2">
+                                </div>
+
+                                <div class="controls-grid">
+                                    <div class="control-group">
+                                        <label>X Range:</label>
+                                        <div class="range-inputs">
+                                            <input type="number" id="x-min-basic" value="-10" step="0.1">
+                                            <span>to</span>
+                                            <input type="number" id="x-max-basic" value="10" step="0.1">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Plot Style:</label>
+                                        <select id="plot-style-basic">
+                                            <option value="lines">Line</option>
+                                            <option value="markers">Points</option>
+                                            <option value="lines+markers">Line + Points</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Color:</label>
+                                        <select id="color-basic">
+                                            <option value="#3b82f6">Blue</option>
+                                            <option value="#ef4444">Red</option>
+                                            <option value="#22c55e">Green</option>
+                                            <option value="#a855f7">Purple</option>
+                                            <option value="#f97316">Orange</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button class="plot-btn" onclick="plotBasic()">🚀 Plot Equation</button>
+                            </div>
+                        </div>
+
+                        <div class="visualization-section">
+                            <div class="equation-display" id="equation-display-basic"></div>
+                            <div class="plot-container" id="plot-basic"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Analysis Panel -->
+                <div class="tab-panel" id="advanced-panel">
+                    <div class="panel-content">
+                        <div class="controls-section">
+                            <h2>🔬 Advanced Function Analysis</h2>
+                            
+                            <div class="examples-grid">
+                                <button class="example-btn" data-equation="x*sin(1/x)">x·sin(1/x)</button>
+                                <button class="example-btn" data-equation="x^x">x^x</button>
+                                <button class="example-btn" data-equation="sin(x)/x">sinc(x)</button>
+                                <button class="example-btn" data-equation="x^2*exp(-x)">x²·e^(-x)</button>
+                                <button class="example-btn" data-equation="1/(1+x^2)">1/(1+x²)</button>
+                                <button class="example-btn" data-equation="tan(x)">tan(x)</button>
+                            </div>
+
+                            <div class="input-section">
+                                <div class="form-group">
+                                    <label for="equation-input-advanced">Complex equation:</label>
+                                    <input type="text" id="equation-input-advanced" class="equation-input" 
+                                           placeholder="e.g., x*sin(1/x)" value="sin(x)/x">
+                                </div>
+
+                                <div class="controls-grid">
+                                    <div class="control-group">
+                                        <label>X Range:</label>
+                                        <div class="range-inputs">
+                                            <input type="number" id="x-min-advanced" value="-10" step="0.1">
+                                            <span>to</span>
+                                            <input type="number" id="x-max-advanced" value="10" step="0.1">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Resolution:</label>
+                                        <input type="number" id="resolution-advanced" value="1000" min="100" max="5000">
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="show-derivative">
+                                            Show Derivative
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <button class="plot-btn" onclick="plotAdvanced()">🔬 Analyze Function</button>
+                            </div>
+                        </div>
+
+                        <div class="visualization-section">
+                            <div class="equation-display" id="equation-display-advanced"></div>
+                            <div class="plot-container" id="plot-advanced"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Visualization Panel -->
+                <div class="tab-panel" id="3d-panel">
+                    <div class="panel-content">
+                        <div class="controls-section">
+                            <h2>🌐 3D Surface Visualization</h2>
+                            
+                            <div class="examples-grid">
+                                <button class="example-btn" data-equation="x^2 + y^2">x² + y²</button>
+                                <button class="example-btn" data-equation="sin(sqrt(x^2 + y^2))">sin(√(x²+y²))</button>
+                                <button class="example-btn" data-equation="cos(x)*sin(y)">cos(x)·sin(y)</button>
+                                <button class="example-btn" data-equation="x^2 - y^2">x² - y²</button>
+                                <button class="example-btn" data-equation="x*y">x·y</button>
+                            </div>
+
+                            <div class="input-section">
+                                <div class="form-group">
+                                    <label for="equation-input-3d">Surface equation z = f(x, y):</label>
+                                    <input type="text" id="equation-input-3d" class="equation-input" 
+                                           placeholder="e.g., x^2 + y^2" value="x^2 + y^2">
+                                </div>
+
+                                <div class="controls-grid">
+                                    <div class="control-group">
+                                        <label>X Range:</label>
+                                        <input type="text" id="x-range-3d" value="-5:5" placeholder="-5:5">
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Y Range:</label>
+                                        <input type="text" id="y-range-3d" value="-5:5" placeholder="-5:5">
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Visualization Type:</label>
+                                        <select id="viz-type-3d">
+                                            <option value="surface">3D Surface</option>
+                                            <option value="contour">Contour Plot</option>
+                                            <option value="heatmap">Heatmap</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-group">
+                                        <label>Color Scale:</label>
+                                        <select id="colorscale-3d">
+                                            <option value="Viridis">Viridis</option>
+                                            <option value="Plasma">Plasma</option>
+                                            <option value="Hot">Hot</option>
+                                            <option value="Cool">Cool</option>
+                                            <option value="Rainbow">Rainbow</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button class="plot-btn" onclick="plot3D()">🌐 Create 3D Plot</button>
+                            </div>
+                        </div>
+
+                        <div class="visualization-section">
+                            <div class="equation-display" id="equation-display-3d"></div>
+                            <div class="plot-container" id="plot-3d"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Panel -->
+                <div class="tab-panel" id="interactive-panel">
+                    <div class="panel-content">
+                        <div class="controls-section">
+                            <h2>📊 Interactive Multi-Function Plotting</h2>
+                            
+                            <div class="function-list">
+                                <div class="function-item">
+                                    <input type="text" class="function-input" placeholder="Enter equation..." value="x^2">
+                                    <select class="function-color">
+                                        <option value="#3b82f6">Blue</option>
+                                        <option value="#ef4444">Red</option>
+                                        <option value="#22c55e">Green</option>
+                                        <option value="#a855f7">Purple</option>
+                                        <option value="#f97316">Orange</option>
+                                    </select>
+                                    <button class="remove-btn">×</button>
+                                </div>
+                            </div>
+                            
+                            <button class="add-function-btn" onclick="addFunction()">+ Add Function</button>
+                            <button class="plot-btn" onclick="plotInteractive()">📊 Plot All Functions</button>
+                        </div>
+
+                        <div class="visualization-section">
+                            <div class="plot-container" id="plot-interactive"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 EquationViz - Open Source Mathematical Visualization Tool</p>
+                <div class="footer-links">
+                    <a href="https://github.com/yourusername/equationviz">GitHub</a>
+                    <a href="docs/API.md">API Docs</a>
+                    <a href="CONTRIBUTING.md">Contributing</a>
+                    <a href="LICENSE">License</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="src/app.js"></script>
+    <script src="src/plotting.js"></script>
+</body>
+</html>
