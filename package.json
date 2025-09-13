@@ -1,0 +1,57 @@
+{
+  "name": "equationviz",
+  "version": "1.0.0",
+  "description": "Interactive web application for visualizing mathematical equations from simple to complex",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8080",
+    "build": "npm run minify",
+    "minify": "npm run minify-css && npm run minify-js",
+    "minify-css": "cleancss -o dist/styles.min.css src/styles.css",
+    "minify-js": "uglifyjs src/*.js -o dist/app.min.js",
+    "test": "npm run test-functions && npm run test-ui",
+    "test-functions": "node tests/test-functions.js",
+    "test-ui": "node tests/test-ui.js",
+    "lint": "eslint src/*.js",
+    "format": "prettier --write src/*.js src/*.css *.md"
+  },
+  "keywords": [
+    "mathematics",
+    "visualization",
+    "equations",
+    "graphing",
+    "education",
+    "interactive",
+    "plotting",
+    "functions",
+    "3d",
+    "math"
+  ],
+  "author": {
+    "name": "Your Name",
+    "email": "your.email@example.com",
+    "url": "https://github.com/yourusername"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/equationviz.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/equationviz/issues"
+  },
+  "homepage": "https://yourusername.github.io/equationviz",
+  "dependencies": {},
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "uglify-js": "^3.17.4",
+    "eslint": "^8.57.0",
+    "prettier": "^3.0.3"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
